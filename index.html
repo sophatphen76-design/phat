@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All My Foods</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+/* BODY AND GENERAL */
+
+html {scroll-behavior:smooth;}
+<!-- ===== TOP BUTTON MENU ===== -->
+.top-menu{
+    background:#8b0000;
+    padding:15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.top-menu a{
+    text-decoration:none;
+    background:gold;
+    color:#8b0000;
+    padding:10px 22px;
+    margin:5px;
+    border-radius:8px;
+    font-weight:bold;
+    display:inline-block;
+    transition:0.3s;
+}
+
+.top-menu a:hover{
+    background:white;
+    transform:scale(1.1);
+}
+
+
+.lang-bar{
+    text-align:right;
+    background:#600000;
+    padding:8px 15px;
+}
+
+.lang-bar a{
+    color:gold;
+    text-decoration:none;
+    font-weight:bold;
+    margin-left:10px;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    margin: 20px;
+    border-radius: 30px;
+    overflow: hidden;
+    height: auto;      /* auto height to fit full image */
+    max-height: 600px; /* optional max height */
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4), transparent);
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    max-width: 500px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: #FFD700;
+    color: hsl(0, 100%, 20%);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #FFD700;
+    display: block;
+}
+
+.hero p {
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+* Buttons */
+.btn-primary:hover {
+    background: linear-gradient(145deg, hsl(25, 100%, 40%), hsl(30, 100%, 50%)); /* slight gradient shift */
+    color: white;
+    transform: scale(1.05);           /* subtle zoom */
+    box-shadow: 0 0 30px rgba(255,215,0,0.5); /* glow effect */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* SECONDARY BUTTON */
+.btn-secondary {
+    background: linear-gradient(145deg, hsl(40, 100%, 50%), hsl(35, 100%, 40%));
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(145deg, hsl(35, 100%, 40%), hsl(40, 100%, 50%));
+    transform: translateY(-3px);
+    cursor: pointer;
+}
+
+
+
+/* Food Grid */
+.section-title {
+    text-align: center;
+    font-size: 36px;
+    margin: 40px 0 30px;
+    text-shadow: 0 0 20px rgba(255,215,0,0.8);
+}
+
+.food-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.food-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+    border-radius: 15px;
+    width: 220px;
+    text-align: center;
+    border: 2px solid rgba(255,215,0,0.3);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.food-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px rgba(255,215,0,0.5);
+    border-color: #FFD700;
+}
+
+.food-card img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.food-card h4 {
+    margin-top: 12px;
+    font-size: 16px;
+}
+
+.food-card .price {
+    color: #FFD700;
+    font-size: 20px;
+    font-weight: 900;
+    margin-top: 8px;
+}
+/* Quick Menu */
+.quick-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 20px;
+    max-width: 800px;
+    margin: 0 auto 40px;
+}
+
+
+/* Payment Section Styling */
+.payment-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+}
+
+.payment-section:hover {
+    transform: scale(1.02);
+}
+
+.payment-section h3 {
+    margin-bottom: 20px;
+    color: gold;
+    font-size: 24px;
+}
+
+.qr-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.qr-card {
+    background: linear-gradient(145deg, hsl(30, 100%, 50%), hsl(25, 100%, 40%));
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 250px;
+    transition: all 0.3s;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.qr-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(255,215,0,0.5);
+}
+
+.qr-card img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.qr-card p {
+    font-weight: bold;
+    color: white;
+    font-size: 14px;
+}
+
+.payment-info {
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+
+.promo-box a:hover {
+        color: #fff;
+        background: #FFD700;
+        padding: 2px 6px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    footer .icons span:hover {
+        transform: scale(1.3);
+        transition: 0.3s;
+    }
+
+    @media screen and (max-width: 768px) {
+        .promo-box {
+            padding: 25px 15px;
+        }
+
+        footer {
+            padding: 30px 15px;
+        }
+
+        footer .icons {
+            gap: 12px;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+body{
+    text-align:center;
+    font-family: 'Trebuchet MS', sans-serif;
+    background: radial-gradient(ellipse at top, hsl(0, 85%, 25%), hsl(0, 100%, 15%));
+    color: #fff;
+    margin:0;
+    padding:0;
+    overflow-x:hidden; /* Prevent horizontal scroll */
+    position: relative;
+}
+
+/* HEADINGS */
+h1, h2{
+    margin:20px 0;
+    font-weight:bold;
+}
+
+/* CHINESE NEW YEAR LOGO */
+.logo {
+    position: relative;
+    background: linear-gradient(145deg,#e53935,#b71c1c);
+    color: gold;
+    padding: 30px 60px;
+    border-radius: 30px;
+    font-size: 40px;
+    font-weight: bold;
+    box-shadow: 0 0 30px rgba(255,165,0,0.7);
+    margin: 20px auto;
+    display: inline-block;
+    animation: pulse 2s infinite alternate;
+    z-index:2;
+}
+.logo::before, .logo::after {
+    content: "🏮";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    animation: swing 2s infinite alternate;
+}
+.logo::before { left: -60px; }
+.logo::after { right: -60px; }
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,165,0,0.5); }
+    50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255,215,0,0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,165,0,0.5); }
+}
+@keyframes swing {
+    0% { transform: translateY(-50%) rotate(-10deg); }
+    50% { transform: translateY(-50%) rotate(10deg); }
+    100% { transform: translateY(-50%) rotate(-10deg); }
+}
+
+/* DISCOUNT BANNER */
+.discount {
+    background: gold;
+    color: #b71c1c;
+    font-weight: bold;
+    padding: 15px 30px;
+    border-radius: 20px;
+    font-size: 24px;
+    margin: 15px auto;
+    display: inline-block;
+    animation: bounce 1.5s infinite alternate;
+    box-shadow: 0 0 20px rgba(255,255,0,0.7);
+    z-index:2;
+}
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* FOOD IMAGE GRID */
+.mid{
+    display:flex;              
+    justify-content:center;
+    align-items:flex-start;
+    gap:20px;                 
+    flex-wrap:wrap;           
+    margin-top:20px;
+}
+figure{
+    margin:0;
+    background: rgba(255,255,255,0.1);
+    padding:10px;
+    border-radius:10px;
+    width:220px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+figure:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+img{
+    width:200px;
+    height:200px;
+    object-fit:cover;         
+    border-radius:8px;
+}
+figcaption{
+    margin-top:10px;
+    font-weight:bold;
+    font-size:16px;
+    color:#fff;
+}
+
+/* MENU BUTTONS */
+.menu {
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    gap:15px; 
+    margin:20px 0;
+}
+.menu button {
+    background:#ff6f00; 
+    color:white; 
+    border:none; 
+    padding:12px 25px;
+    border-radius:8px; 
+    cursor:pointer; 
+    font-size:16px;
+    font-weight:bold;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+.menu button:hover { 
+    background:#e65100; 
+    transform: translateY(-3px);
+}
+
+
+
+
+/* BUY IT NOW SECTION - MODERN & PREMIUM */
+.buy-now {
+    background: linear-gradient(135deg, #ffeb3b, #ffd600);
+    color: #b71c1c;
+    padding: 18px 0;
+    margin: 30px auto;
+    width: 50%;
+    text-align: center;
+    border-radius: 25px;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 6px 15px rgba(183,28,28,0.3), 0 0 25px rgba(255,235,59,0.4);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.buy-now::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+}
+
+.buy-now:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(183,28,28,0.5), 0 0 35px rgba(255,235,59,0.6);
+}
+
+.buy-now:hover::before {
+    top: -70%;
+    left: -70%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px){
+    .buy-now{
+        width: 80%;
+        font-size: 20px;
+    }
+}
+
+
+
+
+/* FLYING DRAGON RIGHT TO LEFT */
+.dragon {
+    position: fixed;
+    top: 20%;
+    right: -200px; /* start off-screen */
+    width: 200px;
+    z-index: 3;
+    animation: flyLeft 20s linear infinite;
+}
+@keyframes flyLeft {
+    0% { right: -250px; transform: rotate(0deg); }
+    50% { transform: rotate(-5deg); }
+    100% { right: 100%; transform: rotate(5deg); }
+}
+.rocket {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 300px;
+    z-index: 5;
+    animation: pop 1.2s ease-in-out infinite alternate
+    
+
+}
+
+.rocket2 {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    z-index: 5;
+    animation: pop 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pop {
+    0%   { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.15); opacity: 1; }
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+    <div class="top-menu">
+        <a href="html.html">🏠 Home</a>
+        <a href="html2.html">🍜 Foods and 🍹Drinks</a>
+        <a href="html3.html">📋 Menu</a>
+        <a href="htmlcontact.html">📞 Contact</a>
+    </div>
+
+
+    
+
+<!-- FLYING DRAGON -->
+<img src="giphy.png" alt="Flying Dragon" class="dragon">
+
+<img src="1.gif" alt="rocket" class="rocket" >
+
+<img src="1.gif" alt="rocket" class="rocket2" >
+
+<!-- CHINESE NEW YEAR LOGO -->
+<div class="logo">HAPPY CHINESE NEW YEAR 🧧</div>
+
+<!-- DISCOUNT BANNER -->
+<div class="discount">🎉 10% OFF for CNY Orders! 🧧</div>
+
+
+<section class="hero" id="home">
+    <img src="blackdude.png" alt="Chinese New Year Food">
+    <div class="hero-overlay"></div>
+    <div class="hero-content" style="font-family: 'Noto Sans SC', sans-serif; color: #FFD700;">
+        <span class="hero-badge" style="background: #FFEB3B; color: #B71C1C; font-family: 'Noto Sans SC', sans-serif;">🐍 Year of the Snake 2026</span>
+        <h1 style="color: #FFF8DC; font-family: 'Noto Sans SC', sans-serif;">
+            Celebrate with <span style="color: #FFEB3B;">Authentic Flavors</span>
+        </h1>
+        <p style="color: #FFE082; font-family: 'Noto Sans SC', sans-serif;">
+            Traditional Chinese New Year dishes prepared with love. Order now and get 10% OFF!
+        </p>
+        <div class="hero-buttons">
+            <a href="html2.html" class="btn-secondary" style="font-family: 'Noto Sans SC', sans-serif;">🛒 Order Now</a>
+            <a href="html3.html" class="btn-secondary" style="font-family: 'Noto Sans SC', sans-serif;">📋 View All Menu</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Traditional Foods Section -->
+<section id="foods">
+    <h2 class="section-title">🥢 Traditional CNY Foods and Drinks That Trending 🥢</h2>
+    <div class="food-grid">
+        <div class="food-card" onclick="addToCart('Dim Sum Basket', '$8.00')">
+            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=400&fit=crop" alt="Dim Sum">
+            <h4>🥟 Dim Sum Basket</h4>
+            <div class="price">$8.00</div>
+        </div>
+        <div class="food-card" onclick="addToCart('Longevity Noodles', '$6.50')">
+            <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&h=400&fit=crop" alt="Noodles">
+            <h4>🍜 Longevity Noodles</h4>
+            <div class="price">$6.50</div>
+        </div>
+        <div class="food-card" onclick="addToCart('Spring Rolls', '$4.00')">
+            <img src="https://images.unsplash.com/photo-1526318896980-cf78c088247c?w=400&h=400&fit=crop" alt="Spring Rolls">
+            <h4>🥢 Spring Rolls</h4>
+            <div class="price">$4.00</div>
+        </div>
+        <div class="food-card" onclick="addToCart('Peking Duck', '$18.00')">
+            <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=400&fit=crop" alt="Peking Duck">
+            <h4>🦆 Peking Duck</h4>
+            <div class="price">$18.00</div>
+        </div>
+        <div class="food-card" onclick="addToCart('Sweet & Sour Fish', '$12.00')">
+            <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=400&h=400&fit=crop" alt="Fish">
+            <h4>🐟 Sweet & Sour Fish</h4>
+            <div class="price">$12.00</div>
+        </div>
+        <div class="food-card" onclick="addToCart('Fried Rice', '$5.50')">
+            <img src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&h=400&fit=crop" alt="Fried Rice">
+            <h4>🍚 Fried Rice</h4>
+            <div class="price">$5.50</div>
+        </div>
+        <div class="food-card" onclick="addToCart('Chrysanthemum Tea', '$3.50')">
+            <img src="chry.webp" alt="Chrysanthemum Tea">
+            <h4>🍵 Chrysanthemum Tea</h4>
+            <div class="price">$3.50</div>
+        </div>
+        
+        <div class="food-card" onclick="addToCart('Red Date & Goji Berry Tea', '$4.00')">
+            <img src="Red Date & Goji Berry Tea.avif" alt="Red Date Tea">
+            <h4>🥤 Red Date & Goji Berry Tea</h4>
+            <div class="price">$4.00</div>
+        </div>
+        
+    </div>
+</section>
+
+<section id="menu">
+    <h2 class="section-title">📋 Quick Menu 📋</h2>
+    <div class="quick-menu">
+        <button class="btn-secondary" onclick="addToCart('Dumplings', '$5')">Dumplings - $5</button>
+        <button class="btn-secondary" onclick="addToCart('Hot Pot', '$15')">Hot Pot - $15</button>
+        <button class="btn-secondary" onclick="addToCart('Tangyuan', '$3')">Tangyuan - $3</button>
+        <button class="btn-secondary" onclick="addToCart('Mooncakes', '$4')">Mooncakes - $4</button>
+        <button class="btn-secondary" onclick="addToCart('Baozi', '$3.50')">Baozi - $3.50</button>
+        <button class="btn-secondary" onclick="addToCart('Tea Set', '$8')">Tea Set - $8</button>
+    </div>
+</section>
+
+
+<!-- CART SLOT -->
+<div style="
+    max-width:600px;
+    margin:30px auto;
+    background:rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    border:2px solid gold;
+">
+
+    <h3>🛒 Your Order</h3>
+
+    <div id="cart-slot" style="margin:15px 0;"></div>
+
+    <div id="cart-total" style="font-weight:bold; color:gold;">
+        Total: $0
+    </div>
+
+</div>
+
+
+
+<!-- Customer Info Only - Modern Cool Style -->
+<div style="max-width:600px;margin:50px auto;background:rgba(255,255,255,0.05);padding:30px;border-radius:20px;border:2px solid gold;box-shadow: 0 0 40px rgba(255,215,0,0.3);">
+    <h3 style="font-size:26px;font-weight:bold;color:#FFEB3B;margin-bottom:25px;text-align:center;">📝 Customer Information</h3>
+    
+    <input id="custName" placeholder="Your Name" style="width:100%;padding:15px;margin:12px 0;border-radius:12px;border:none;font-size:17px;background:rgba(255,255,255,0.1);color:#fff;outline:none;box-shadow: inset 0 0 10px rgba(255,235,59,0.3);">
+    <input id="custPhone" placeholder="Phone Number" style="width:100%;padding:15px;margin:12px 0;border-radius:12px;border:none;font-size:17px;background:rgba(255,255,255,0.1);color:#fff;outline:none;box-shadow: inset 0 0 10px rgba(255,235,59,0.3);">
+    <input id="custLocation" placeholder="Delivery Location / Address" style="width:100%;padding:15px;margin:12px 0;border-radius:12px;border:none;font-size:17px;background:rgba(255,255,255,0.1);color:#fff;outline:none;box-shadow: inset 0 0 10px rgba(255,235,59,0.3);">
+
+    <div onclick="submitInfo()" style="margin-top:20px;padding:15px;text-align:center;background:#FFEB3B;color:#B71C1C;font-weight:bold;font-size:18px;border-radius:15px;cursor:pointer;box-shadow: 0 0 20px rgba(255,215,0,0.5);transition:0.3s;">
+        ✅ Submit Info
+    </div>
+</div>
+
+<script>
+function showNotification(message, isError=false){
+    const popup = document.createElement("div");
+    popup.innerHTML = message;
+    popup.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: ${isError ? "#B71C1C" : "#FFEB3B"};
+        color: ${isError ? "#FFEB3B" : "#B71C1C"};
+        font-weight: bold;
+        padding: 15px 25px;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(255,215,0,0.7);
+        opacity: 0;
+        z-index: 9999;
+        text-align:center;
+        white-space: pre-line;
+        max-width:90%;
+        animation: popupIn 0.5s forwards, popupOut 0.5s 3s forwards;
+    `;
+    document.body.appendChild(popup);
+    setTimeout(()=>popup.remove(), 3500);
+}
+
+function submitInfo(){
+    const name = document.getElementById("custName").value.trim();
+    const phone = document.getElementById("custPhone").value.trim();
+    const location = document.getElementById("custLocation").value.trim();
+
+    if(name === "" || phone === "" || location === ""){
+        showNotification("⚠️ Please fill Name, Phone & Location!", true);
+        return;
+    }
+
+    showNotification(
+`✅ Information Submitted!
+👤 Name: ${name}
+📞 Phone: ${phone}
+📍 Location: ${location}`
+    );
+
+    document.getElementById("custName").value = "";
+    document.getElementById("custPhone").value = "";
+    document.getElementById("custLocation").value = "";
+}
+
+// ===== POPUP ANIMATIONS =====
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes popupIn {
+    0% { transform: translateX(-50%) translateY(-20px); opacity:0; }
+    100% { transform: translateX(-50%) translateY(0); opacity:1; }
+}
+@keyframes popupOut {
+    0% { opacity:1; transform: translateX(-50%) translateY(0); }
+    100% { opacity:0; transform: translateX(-50%) translateY(-20px); }
+}
+div[onclick]{
+    transition: 0.3s;
+}
+div[onclick]:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255,215,0,0.8);
+}
+input:focus{
+    box-shadow: inset 0 0 15px rgba(255,235,59,0.6);
+}
+`;
+document.head.appendChild(style);
+</script>
+
+
+
+
+
+<!-- BUY BUTTON -->
+
+
+<script>
+    let cart = [];
+    let orderNumber = 123;
+    
+    // ADD TO CART
+    function addToCart(name, price){
+        let cleanPrice = parseFloat(price.replace('$',''));
+    
+        cart.push({
+            name: name,
+            price: cleanPrice
+        });
+    
+        updateCartSlot();
+    }
+    
+    // UPDATE CART DISPLAY
+    function updateCartSlot(){
+        const slot = document.getElementById("cart-slot");
+        const totalBox = document.getElementById("cart-total");
+    
+        let total = 0;
+        slot.innerHTML = "";
+    
+        cart.forEach(item => {
+            total += item.price;
+    
+            let div = document.createElement("div");
+            div.innerHTML = item.name + " - $" + item.price.toFixed(2);
+            slot.appendChild(div);
+        });
+    
+        totalBox.innerHTML = "Total: $" + total.toFixed(2);
+    }
+    
+    // BUY NOW
+    function orderNow(){
+    
+        if(cart.length === 0){
+            alert("❌ Cart is empty!");
+            return;
+        }
+    
+        let total = cart.reduce((sum, item) => sum + item.price, 0);
+    
+        alert(
+            "🧾 Order #" + orderNumber +
+            "\nItems: " + cart.length +
+            "\nTotal: $" + total.toFixed(2) +
+            "\n\n✅ Thank you for your order!"
+        );
+    
+        orderNumber++;
+        cart = [];
+        updateCartSlot();
+    }
+    </script>
+    
+
+
+
+
+<script>
+function applyPromo(){
+    let code = document.getElementById("promo").value;
+
+    if(code.toLowerCase() === "cny10"){
+        alert("🎉 Promo Applied! You get 10% OFF");
+    }else{
+        alert("❌ Invalid Code");
+    }
+}
+
+function orderNow(){
+    alert("Thank you for your order! 🧧");
+}
+</script>
+
+<!-- Payment Section -->
+<section>
+    <h2 class="section-title">💳 Easy Payment 💳</h2>
+    <div class="payment-section">
+        <h3>💳 Pay with ABA</h3>
+        <div class="qr-container">
+            <!-- First QR -->
+            <div class="qr-card">
+                <img src="QREN.png" alt="ABA QR Code">
+                <p>Scan to pay</p>
+            </div>
+            <!-- Second QR -->
+            <div class="qr-card">
+                <img src="QRKH.png" alt="ABA QR Code">
+                <p>Scan to pay</p>
+            </div>
+        </div>
+        <p class="payment-info">Fast & Secure Payment 🔒</p>
+        <div class="input-group" style="margin-top:20px;">
+            <input type="file" id="paymentProof" placeholder=" " required>
+            <label for="paymentProof">Upload Screenshot / Receipt</label>
+        </div>
+        <div class="buy-now" onclick="confirmPayment()">✅ Confirm Payment</div>
+    </div>
+</section>
+
+<div class="buy-now" onclick="orderNow()">Buy It Now</div>
+
+<script>
+function confirmPayment(){
+    const proof = document.getElementById("paymentProof").files[0];
+
+    if(!proof){
+        showSuccess("⚠️ Please upload payment proof!");
+        return;
+    }
+
+    showSuccess("🎉 Payment Confirmed! Thank you!");
+    document.getElementById("paymentProof").value = "";
+}
+
+// Popup function
+function showSuccess(msg){
+    let popup = document.getElementById("success-popup");
+    if(!popup){
+        popup = document.createElement("div");
+        popup.id = "success-popup";
+        document.body.appendChild(popup);
+    }
+    popup.textContent = msg;
+    popup.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #FFEB3B;
+        color: #B71C1C;
+        font-weight: bold;
+        padding: 15px 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(255,215,0,0.8);
+        opacity: 1;
+        z-index: 9999;
+        transition: opacity 0.5s;
+    `;
+    setTimeout(()=>{ popup.style.opacity = 0; }, 2500);
+}
+</script>
+
+
+
+<section class="cta-section" style="text-align: center; margin: 40px 0;">
+    <a href="#foods" class="btn-secondary">🛒 View All Foods</a>
+    <a href="#menu" class="btn-secondary">📋 Full Menu</a>
+</section>
+
+<section id="contact" style="max-width: 700px; margin: 60px auto; padding: 0 20px;">
+    <h2 class="section-title" style="text-align: center; margin-bottom: 40px; font-size: 32px; color: #FFD700; text-shadow: 2px 2px 4px #800000;">📞 Contact Us 📞</h2>
+    
+    <div class="promo-box" style="background: radial-gradient(ellipse at top, hsl(0, 85%, 25%), hsl(0, 100%, 15%)); color: #FFD700; padding: 30px 25px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid rgba(255,215,0,0.3);">
+        <p style="margin-bottom: 15px; font-size: 18px;"><strong>🏠 Address:</strong> 123 Lucky Dragon Street, Chinatown</p>
+        <p style="margin-bottom: 15px; font-size: 18px;"><strong>📞 Phone:</strong> +855 12 888 888</p>
+        <p style="margin-bottom: 15px; font-size: 18px;"><strong>📧 Email:</strong> <a href="mailto:order@allmyfoods.com" style="color: #FFD700; text-decoration: underline;">cny123@allmyfoods.com</a></p>
+        <p style="margin-bottom: 15px; font-size: 18px;"><strong>🕐 Hours:</strong> Mon-Sun: 10AM - 10PM</p>
+        <p style="color: #FFD700; font-weight: bold; font-size: 20px; margin-top: 20px; text-align: center;">🎊 CNY Special: Open 24/7! 🧧</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer style="text-align: center; margin-top: 80px; padding: 40px 20px; background: radial-gradient(ellipse at top, hsl(0, 85%, 25%), hsl(0, 100%, 15%)); color: #FFD700; position: relative; overflow: hidden; border-top: 6px solid rgba(255,215,0,0.5);">
+    
+    <!-- Decorative Lanterns -->
+    <div style="position: absolute; top: -20px; left: 10%; font-size: 50px; opacity: 0.2;">🏮</div>
+    <div style="position: absolute; top: 0; right: 15%; font-size: 60px; opacity: 0.2;">🏮</div>
+    
+    <p style="font-size: 26px; font-weight: bold; margin-bottom: 15px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">🧧 All My Foods - CNY 2026 🧧</p>
+    <p style="opacity: 0.9; font-size: 18px; margin-bottom: 25px;">Wishing you prosperity and good fortune! 恭喜发财 🎊</p>
+    
+    <div class="icons" style="font-size: 28px; gap: 20px; display: inline-flex;">
+        <span>🐍</span>
+        <span>🏮</span>
+        <span>🧧</span>
+        <span>🎆</span>
+        <span>🧨</span>
+    </div>
+
+    <p style="margin-top: 25px; font-size: 16px; opacity: 0.7;">&copy; 2026 All My Foods. All rights reserved.</p>
+</footer>
+
+
+</body>
+</html>

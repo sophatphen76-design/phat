@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All My Foods</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+/* BODY AND GENERAL */
+
+html {scroll-behavior:smooth;}
+<!-- ===== TOP BUTTON MENU ===== -->
+.top-menu{
+    background:#8b0000;
+    padding:15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.top-menu a{
+    text-decoration:none;
+    background:gold;
+    color:#8b0000;
+    padding:10px 22px;
+    margin:5px;
+    border-radius:8px;
+    font-weight:bold;
+    display:inline-block;
+    transition:0.3s;
+}
+
+.top-menu a:hover{
+    background:white;
+    transform:scale(1.1);
+}
+
+
+.lang-bar{
+    text-align:right;
+    background:#600000;
+    padding:8px 15px;
+}
+
+.lang-bar a{
+    color:gold;
+    text-decoration:none;
+    font-weight:bold;
+    margin-left:10px;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    margin: 20px;
+    border-radius: 30px;
+    overflow: hidden;
+    height: auto;      /* auto height to fit full image */
+    max-height: 600px; /* optional max height */
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4), transparent);
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    max-width: 500px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: #FFD700;
+    color: hsl(0, 100%, 20%);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #FFD700;
+    display: block;
+}
+
+.hero p {
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+* Buttons */
+.btn-primary:hover {
+    background: linear-gradient(145deg, hsl(25, 100%, 40%), hsl(30, 100%, 50%)); /* slight gradient shift */
+    color: white;
+    transform: scale(1.05);           /* subtle zoom */
+    box-shadow: 0 0 30px rgba(255,215,0,0.5); /* glow effect */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* SECONDARY BUTTON */
+.btn-secondary {
+    background: linear-gradient(145deg, hsl(40, 100%, 50%), hsl(35, 100%, 40%));
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(145deg, hsl(35, 100%, 40%), hsl(40, 100%, 50%));
+    transform: translateY(-3px);
+    cursor: pointer;
+}
+
+
+
+/* Food Grid */
+.section-title {
+    text-align: center;
+    font-size: 36px;
+    margin: 40px 0 30px;
+    text-shadow: 0 0 20px rgba(255,215,0,0.8);
+}
+
+.food-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.food-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+    border-radius: 15px;
+    width: 220px;
+    text-align: center;
+    border: 2px solid rgba(255,215,0,0.3);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.food-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px rgba(255,215,0,0.5);
+    border-color: #FFD700;
+}
+
+.food-card img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.food-card h4 {
+    margin-top: 12px;
+    font-size: 16px;
+}
+
+.food-card .price {
+    color: #FFD700;
+    font-size: 20px;
+    font-weight: 900;
+    margin-top: 8px;
+}
+/* Quick Menu */
+.quick-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 20px;
+    max-width: 800px;
+    margin: 0 auto 40px;
+}
+
+
+/* Payment Section Styling */
+.payment-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+}
+
+.payment-section:hover {
+    transform: scale(1.02);
+}
+
+.payment-section h3 {
+    margin-bottom: 20px;
+    color: gold;
+    font-size: 24px;
+}
+
+.qr-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.qr-card {
+    background: linear-gradient(145deg, hsl(30, 100%, 50%), hsl(25, 100%, 40%));
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 250px;
+    transition: all 0.3s;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.qr-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(255,215,0,0.5);
+}
+
+.qr-card img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.qr-card p {
+    font-weight: bold;
+    color: white;
+    font-size: 14px;
+}
+
+.payment-info {
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+
+.promo-box a:hover {
+        color: #fff;
+        background: #FFD700;
+        padding: 2px 6px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    footer .icons span:hover {
+        transform: scale(1.3);
+        transition: 0.3s;
+    }
+
+    @media screen and (max-width: 768px) {
+        .promo-box {
+            padding: 25px 15px;
+        }
+
+        footer {
+            padding: 30px 15px;
+        }
+
+        footer .icons {
+            gap: 12px;
+        }
+    }
+
+
+
+
+body{
+    text-align:center;
+    font-family: 'Trebuchet MS', sans-serif;
+    background: radial-gradient(ellipse at top, hsl(0, 85%, 25%), hsl(0, 100%, 15%));
+    color: #fff;
+    margin:0;
+    padding:0;
+    overflow-x:hidden; /* Prevent horizontal scroll */
+    position: relative;
+}
+
+/* HEADINGS */
+h1, h2{
+    margin:20px 0;
+    font-weight:bold;
+}
+
+/* CHINESE NEW YEAR LOGO */
+.logo {
+    position: relative;
+    background: linear-gradient(145deg,#e53935,#b71c1c);
+    color: gold;
+    padding: 30px 60px;
+    border-radius: 30px;
+    font-size: 40px;
+    font-weight: bold;
+    box-shadow: 0 0 30px rgba(255,165,0,0.7);
+    margin: 20px auto;
+    display: inline-block;
+    animation: pulse 2s infinite alternate;
+    z-index:2;
+}
+.logo::before, .logo::after {
+    content: "🏮";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    animation: swing 2s infinite alternate;
+}
+.logo::before { left: -60px; }
+.logo::after { right: -60px; }
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,165,0,0.5); }
+    50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255,215,0,0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,165,0,0.5); }
+}
+@keyframes swing {
+    0% { transform: translateY(-50%) rotate(-10deg); }
+    50% { transform: translateY(-50%) rotate(10deg); }
+    100% { transform: translateY(-50%) rotate(-10deg); }
+}
+
+/* DISCOUNT BANNER */
+.discount {
+    background: gold;
+    color: #b71c1c;
+    font-weight: bold;
+    padding: 15px 30px;
+    border-radius: 20px;
+    font-size: 24px;
+    margin: 15px auto;
+    display: inline-block;
+    animation: bounce 1.5s infinite alternate;
+    box-shadow: 0 0 20px rgba(255,255,0,0.7);
+    z-index:2;
+}
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+
+/* MENU BUTTONS */
+.menu {
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    gap:15px; 
+    margin:20px 0;
+}
+.menu button {
+    background:#ff6f00; 
+    color:white; 
+    border:none; 
+    padding:12px 25px;
+    border-radius:8px; 
+    cursor:pointer; 
+    font-size:16px;
+    font-weight:bold;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+.menu button:hover { 
+    background:#e65100; 
+    transform: translateY(-3px);
+}
+
+
+.menu-section {
+    padding: 2rem 1rem;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+  
+  .menu-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .menu-header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    margin-bottom: 0.5rem;
+  }
+  
+  .menu-header p {
+    color: rgba(255, 215, 0, 0.7);
+    font-size: 1.1rem;
+  }
+  
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .menu-category {
+    background: rgba(139, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 3px solid #FFD700;
+    transition: transform 0.3s;
+  }
+  
+  .menu-category:hover {
+    transform: scale(1.02);
+  }
+  
+  .menu-category h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #FFD700;
+    margin-bottom: 1rem;
+  }
+  
+  .menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .menu-item:hover {
+    background: #FFD700;
+    color: #8B0000;
+  }
+  
+  .menu-item .name {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .menu-item .price {
+    font-weight: 700;
+  }
+
+
+
+/* BUY IT NOW SECTION - MODERN & PREMIUM */
+.buy-now {
+    background: linear-gradient(135deg, #ffeb3b, #ffd600);
+    color: rgba(245, 13, 13, 0.3);
+    padding: 18px 0;
+    margin: 30px auto;
+    width: 50%;
+    text-align: center;
+    border-radius: 25px;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 6px 15px rgba(183,28,28,0.3), 0 0 25px rgba(255,235,59,0.4);
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.buy-now::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+}
+
+.buy-now:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(183,28,28,0.5), 0 0 35px rgba(255,235,59,0.6);
+}
+
+.buy-now:hover::before {
+    top: -70%;
+    left: -70%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px){
+    .buy-now{
+        width: 80%;
+        font-size: 20px;
+    }
+}
+
+
+
+
+/* FLYING DRAGON RIGHT TO LEFT */
+.dragon {
+    position: fixed;
+    top: 20%;
+    right: -200px; /* start off-screen */
+    width: 200px;
+    z-index: 3;
+    animation: flyLeft 20s linear infinite;
+}
+@keyframes flyLeft {
+    0% { right: -250px; transform: rotate(0deg); }
+    50% { transform: rotate(-5deg); }
+    100% { right: 100%; transform: rotate(5deg); }
+}
+.rocket {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 300px;
+    z-index: 5;
+    animation: pop 1.2s ease-in-out infinite alternate
+    
+
+}
+
+.rocket2 {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    z-index: 5;
+    animation: pop 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pop {
+    0%   { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.15); opacity: 1; }
+}
+
+
+
+
+
+
+.contact-section {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .contact-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .contact-header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-header p {
+    color: #ccc;
+    font-size: 1.1rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .contact-card {
+    background: rgba(245, 13, 13, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid #FFD700;
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  .contact-card h2 {
+    color: #FFD700;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-card h3 {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-card p {
+    color: #ccc;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .cny-special {
+    color: #FFD700;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .social-icons span {
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .social-icons span:hover {
+    transform: scale(1.25);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #FFD700;
+  }
+
+  .form-group textarea {
+    resize: none;
+    min-height: 100px;
+  }
+
+  .submit-btn {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #8B0000;
+    font-weight: 900;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .submit-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+  }
+
+  .qr-section {
+    text-align: center;
+  }
+
+  .qr-box {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .qr-box img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .map-placeholder {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 0.5rem;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin-top: 1rem;
+  }
+
+  .cny-banner {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .cny-banner span {
+    display: inline-block;
+    background: linear-gradient(135deg, #8B0000, #DC143C);
+    border: 2px solid #FFD700;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+
+
+
+</style>
+</head>
+<body>
+
+
+
+    <div class="top-menu">
+      <a href="html.html">🏠 Home</a>
+      <a href="html2.html">🍜 Foods and 🍹Drinks</a>
+      <a href="html3.html">📋 Menu</a>
+      <a href="htmlcontact.html">📞 Contact</a>
+    </div>
+
+
+    
+
+<!-- FLYING DRAGON -->
+<img src="giphy.png" alt="Flying Dragon" class="dragon">
+
+<img src="1.gif" alt="rocket" class="rocket" >
+
+<img src="1.gif" alt="rocket" class="rocket2" >
+
+<!-- CHINESE NEW YEAR LOGO -->
+<div class="logo">HAPPY CHINESE NEW YEAR 🧧</div>
+
+<!-- DISCOUNT BANNER -->
+<div class="discount">🎉 10% OFF for CNY Orders! 🧧</div>
+
+
+
+
+
+
+<section class="menu-section">
+    <div class="menu-header">
+      <h1>📋 Contact Us 📋</h1>
+    </div>
+
+
+
+    <section class="contact-section">
+        <div class="contact-header">
+        </div>
+      
+        <div class="contact-grid">
+          <!-- Contact Info -->
+          <div class="contact-card">
+            <h2>📍 Find Us</h2>
+            
+            <div class="info-block">
+              <h3>🏠 Address</h3>
+              <p>123 Lucky Dragon Street</p>
+              <p>Chinatown, Phnom Penh</p>
+              <p>Cambodia 🇰🇭</p>
+            </div>
+            
+            <div class="info-block">
+              <h3>📞 Phone</h3>
+              <p>+855 12 888 888</p>
+              <p>+855 23 456 789</p>
+            </div>
+            
+            <div class="info-block">
+              <h3>📧 Email</h3>
+              <p>order@allmyfoods.com</p>
+            </div>
+            
+            <div class="info-block">
+              <h3>🕐 Hours</h3>
+              <p>Mon-Sun: 10:00 AM - 10:00 PM</p>
+              <p class="cny-special">🎊 CNY Special: Open 24/7!</p>
+            </div>
+      
+            <div class="info-block">
+
+            </div>
+          </div>
+      
+          <!-- Contact Form -->
+          <div class="contact-card">
+            <h2>✉️ Send Message</h2>
+            
+            <form class="contact-form" onsubmit="submitForm(event)">
+              <div class="form-group">
+                <label>Your Name *</label>
+                <input type="text" id="name" required placeholder="Enter your name...">
+              </div>
+              
+              <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="phone" required placeholder="+855 XX XXX XXX">
+              </div>
+              
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter your email...">
+              </div>
+              
+              <div class="form-group">
+                <label>Message *</label>
+                <textarea id="message" required placeholder="Your message or order..."></textarea>
+              </div>
+              
+              <button type="submit" class="submit-btn">🧧 Send Message</button>
+            </form>
+          </div>
+      
+          <!-- Payment & Map -->
+          <div class="contact-card qr-section">
+            <h2>💳 Quick Payment</h2>
+            <div class="qr-box">
+              <img src="QREN.png" alt="Payment QR Code">
+            </div>
+            <p>Scan to pay via ABA Bank</p>
+
+            <div class="qr-box">
+              <img src="QRKH.png" alt="Payment QR Code">
+            </div>
+            <p>Scan to pay via ABA Bank</p>
+      
+
+      </section>
+
+
+      
+      <script>
+        function submitForm(e) {
+          e.preventDefault();
+          alert('🧧 Message sent successfully! We\'ll get back to you within 24 hours. 恭喜发财!');
+          e.target.reset();
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+<!-- Footer -->
+<footer style="text-align: center; margin-top: 80px; padding: 40px 20px; background: radial-gradient(ellipse at top, hsl(0, 85%, 25%), hsl(0, 100%, 15%)); color: #FFD700; position: relative; overflow: hidden; border-top: 6px solid rgba(255,215,0,0.5);">
+    
+    <!-- Decorative Lanterns -->
+    <div style="position: absolute; top: -20px; left: 10%; font-size: 50px; opacity: 0.2;">🏮</div>
+    <div style="position: absolute; top: 0; right: 15%; font-size: 60px; opacity: 0.2;">🏮</div>
+    
+    <p style="font-size: 26px; font-weight: bold; margin-bottom: 15px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">🧧 All My Foods - CNY 2026 🧧</p>
+    <p style="opacity: 0.9; font-size: 18px; margin-bottom: 25px;">Wishing you prosperity and good fortune! 恭喜发财 🎊</p>
+    
+    <div class="icons" style="font-size: 28px; gap: 20px; display: inline-flex;">
+        <span>🐍</span>
+        <span>🏮</span>
+        <span>🧧</span>
+        <span>🎆</span>
+        <span>🧨</span>
+    </div>
+
+    <p style="margin-top: 25px; font-size: 16px; opacity: 0.7;">&copy; 2026 All My Foods. All rights reserved.</p>
+</footer>
+
+
+    
+    
+
+</body>
+</html>
